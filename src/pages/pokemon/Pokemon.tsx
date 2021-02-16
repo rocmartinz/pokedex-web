@@ -8,7 +8,7 @@ import PokemonsService from '../../services/PokemonsService';
 import Error from '../../shared/error/Error';
 import Loading from '../../shared/loading/Loading';
 
-const defaultPokemon: ISimplePokemon = { id: 0, name: '', image: '' };
+const defaultPokemon: ISimplePokemon = { id: 0, name: '', image: '', types: [] };
 
 const Pokemon: React.SFC = () => {
   const [pokemon, setPokemon]: [ISimplePokemon, (pokemon: ISimplePokemon) => void] = React.useState(defaultPokemon);
