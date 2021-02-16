@@ -1,8 +1,13 @@
-import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import ISimplePokemon from './ISimplePokemon';
+import ISimplePokemon from '../../models/ISimplePokemon';
+
+import PokemonsService from '../../services/PokemonsService';
+
+import Error from '../../shared/error/Error';
+import Loading from '../../shared/loading/Loading';
+
 import PokemonCard from './PokemonCard';
 
 const defaultPokemons: ISimplePokemon[] = [];
@@ -15,18 +20,16 @@ const Pokemons: React.FC = () => {
   const [error, setError]: [string, (error: string) => void] = React.useState("");
 
   React.useEffect(() => {
-    const url = 'https://ygzqsl30z1.execute-api.sa-east-1.amazonaws.com/dev/pokemons?limit=20&offset=0';
-    axios.get<ISimplePokemon[]>(url)
+    PokemonsService.list()
       .then((response) => {
-        setPokemons(response.data);
+        setPokemons(response);
       })
-      .catch((err) => {
-        setError(err);
+      .catch(() => {
+        setError('An error has occurred, try again later.');
       })
       .finally(() => {
         setLoading(false);
       });
-    ;
   }, []);
 
   return (
@@ -42,7 +45,9 @@ const Pokemons: React.FC = () => {
           </li>
         ))}
       </ul>
-      { error && <p className="text-red-600">{error}</p>}
+
+      { loading && <Loading />}
+      { error && <Error message={error} />}
     </div>
   );
 };

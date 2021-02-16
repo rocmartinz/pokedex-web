@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ISimplePokemon from './ISimplePokemon';
+import ISimplePokemon from '../../models/ISimplePokemon';
 
 const PokemonCard: React.FC<{ pokemon: ISimplePokemon }> = ({ pokemon }) => {
   return (
